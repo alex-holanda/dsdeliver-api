@@ -35,11 +35,24 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    @Transactional
+    public Order setDelivered(Long orderId) {
+        Order order = findOrFail(orderId);
+        order.setStatus(OrderStatus.DELIVERED);
+
+        return order;
+    }
+
     private void validOrderProducts(Order order) {
         order.getProducts().forEach(p -> {
             Product product = productService.find(p.getId());
 
             BeanUtils.copyProperties(product, p);
         });
+    }
+
+    private Order findOrFail(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Não foi encontrado o pedido de id " + orderId));
     }
 }

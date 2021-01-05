@@ -1,8 +1,10 @@
 package com.devsuperior.dsdeliver.api.controller;
 
 import com.devsuperior.dsdeliver.api.assembler.OrderModelAssembler;
+import com.devsuperior.dsdeliver.api.assembler.OrderResumeModelAssembler;
 import com.devsuperior.dsdeliver.api.disassembler.OrderInputDisassembler;
 import com.devsuperior.dsdeliver.api.model.OrderModel;
+import com.devsuperior.dsdeliver.api.model.OrderResumeModel;
 import com.devsuperior.dsdeliver.api.model.input.OrderInput;
 import com.devsuperior.dsdeliver.domain.model.Order;
 import com.devsuperior.dsdeliver.domain.service.OrderService;
@@ -24,6 +26,9 @@ public class OrderController {
 
     @Autowired
     private OrderModelAssembler orderModelAssembler;
+
+    @Autowired
+    private OrderResumeModelAssembler orderResumeModelAssembler;
 
     @Autowired
     private OrderInputDisassembler orderInputDisassembler;
@@ -49,5 +54,11 @@ public class OrderController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(orderModelAssembler.toModel(order));
+    }
+
+    @PutMapping("/{orderId}/delivered")
+    public ResponseEntity<OrderResumeModel> setDelivered(@PathVariable Long orderId) {
+
+        return ResponseEntity.ok(orderResumeModelAssembler.toModel(orderService.setDelivered(orderId)));
     }
 }
