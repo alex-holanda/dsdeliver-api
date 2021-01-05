@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Override
-    @Query("from Order o join fetch o.products")
-    List<Order> findAll();
+    @Query("select distinct o from Order o join fetch o.products where o.status = 0 order by o.moment asc")
+    List<Order> findOrdersWithProducts();
 }

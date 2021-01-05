@@ -14,6 +14,6 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public List<Order> findAll() {
-        return orderRepository.findAll();
+        return orderRepository.findOrdersWithProducts();
     }
 }
