@@ -19,4 +19,14 @@ public class ProductService {
     public List<Product> findAll() {
         return productRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
+
+    @Transactional(readOnly = true)
+    public Product find(Long productId) {
+        return findOrFail(productId);
+    }
+
+    private Product findOrFail(Long productId) {
+        return productRepository.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Não foi encontrado o produto de id " + productId));
+    }
 }
