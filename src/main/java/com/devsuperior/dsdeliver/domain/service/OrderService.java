@@ -32,6 +32,8 @@ public class OrderService {
         order.setMoment(Instant.now());
         order.setStatus(OrderStatus.PENDING);
 
+        order.calcularTotal();
+
         return orderRepository.save(order);
     }
 

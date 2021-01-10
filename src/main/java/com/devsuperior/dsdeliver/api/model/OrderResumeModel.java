@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Getter
@@ -23,4 +24,6 @@ public class OrderResumeModel implements Serializable {
     private Instant moment;
 
     private String status;
+
+    private BigDecimal total;
 }

@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
 
@@ -34,7 +35,22 @@ public class Order implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "tb_order_product",
-        joinColumns = @JoinColumn(name = "order_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id"))
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products;
+
+    private BigDecimal total;
+
+    public void calcularTotal() {
+        this.total = BigDecimal.ZERO;
+
+        if (products.size() > 0) {
+            this.total = products
+                    .stream()
+                    .map(p -> p.getPrice())
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+
+        System.out.println(this.total);
+    }
 }

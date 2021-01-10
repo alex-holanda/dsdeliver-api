@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,4 +28,6 @@ public class OrderModel implements Serializable {
     private String status;
 
     private List<ProductModel> products = new ArrayList<>();
+
+    private BigDecimal total;
 }
